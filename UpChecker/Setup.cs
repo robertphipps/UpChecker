@@ -10,11 +10,19 @@ using System.Windows.Forms;
 
 namespace UpChecker
 {
-    public partial class Form1 : Form
+    public partial class Setup : Form
     {
-        public Form1()
+        public Setup()
         {
             InitializeComponent();
+        }
+
+        private void goButton_Click(object sender, EventArgs e)
+        {
+            Worker w = new Worker(inputBox.Text);
+            w.Show();
+            w.Run();
+
         }
     }
 }
