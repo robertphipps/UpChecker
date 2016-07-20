@@ -33,6 +33,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pingClientsRadio = new System.Windows.Forms.RadioButton();
             this.rebootClientsRadio = new System.Windows.Forms.RadioButton();
+            this.checkClientsRadio = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // inputBox
@@ -45,7 +47,7 @@
             // 
             // goButton
             // 
-            this.goButton.Location = new System.Drawing.Point(15, 243);
+            this.goButton.Location = new System.Drawing.Point(15, 247);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(256, 36);
             this.goButton.TabIndex = 1;
@@ -84,11 +86,33 @@
             this.rebootClientsRadio.Text = "Reboot clients";
             this.rebootClientsRadio.UseVisualStyleBackColor = true;
             // 
+            // checkClientsRadio
+            // 
+            this.checkClientsRadio.AutoSize = true;
+            this.checkClientsRadio.Location = new System.Drawing.Point(15, 224);
+            this.checkClientsRadio.Name = "checkClientsRadio";
+            this.checkClientsRadio.Size = new System.Drawing.Size(162, 17);
+            this.checkClientsRadio.TabIndex = 3;
+            this.checkClientsRadio.TabStop = true;
+            this.checkClientsRadio.Text = "Check for directory on clients";
+            this.checkClientsRadio.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(192, 292);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "v3.1 - RP 2016";
+            // 
             // Setup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 291);
+            this.ClientSize = new System.Drawing.Size(280, 314);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.checkClientsRadio);
             this.Controls.Add(this.rebootClientsRadio);
             this.Controls.Add(this.pingClientsRadio);
             this.Controls.Add(this.label1);
@@ -108,6 +132,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton pingClientsRadio;
         private System.Windows.Forms.RadioButton rebootClientsRadio;
+        private System.Windows.Forms.RadioButton checkClientsRadio;
+        private System.Windows.Forms.Label label2;
     }
 }
 

@@ -19,15 +19,22 @@ namespace UpChecker
 
         private void goButton_Click(object sender, EventArgs e)
         {
+            var clients = inputBox.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
             if (pingClientsRadio.Checked)
             {
-                PingWorker w = new PingWorker(inputBox.Text);
+                WorkerWindow w = new WorkerWindow(clients, WorkerMode.Ping);
                 w.Show();
                 w.Run();
             }
             else if (rebootClientsRadio.Checked)
             {
-                RebootWorker w = new RebootWorker(inputBox.Text);
+                WorkerWindow w = new WorkerWindow(clients, WorkerMode.Reboot);
+                w.Show();
+                w.Run();
+            }
+            else if (checkClientsRadio.Checked)
+            {
+                WorkerWindow w = new WorkerWindow(clients, WorkerMode.Checkfile);
                 w.Show();
                 w.Run();
             }

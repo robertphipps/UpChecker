@@ -1,6 +1,6 @@
 ﻿namespace UpChecker
 {
-    partial class RebootWorker
+    partial class WorkerWindow
     {
         /// <summary>
         /// Required designer variable.
