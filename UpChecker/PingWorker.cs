@@ -12,13 +12,13 @@ using System.Windows.Forms;
 
 namespace UpChecker
 {
-    public partial class Worker : Form
+    public partial class PingWorker : Form
     {
         private List<Task> tasks = new List<Task>();
         private List<string> results = new List<string>();
         private List<string> addresses;
 
-        public Worker(string a)
+        public PingWorker(string a)
         {
             InitializeComponent();
             addresses = a.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
@@ -87,8 +87,8 @@ namespace UpChecker
     public class CheckLifeWorker
     {
         private string address;
-        private Worker worker;
-        public CheckLifeWorker(string a, Worker w)
+        private PingWorker worker;
+        public CheckLifeWorker(string a, PingWorker w)
         {
             address = a;
             worker = w;

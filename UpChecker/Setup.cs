@@ -19,10 +19,22 @@ namespace UpChecker
 
         private void goButton_Click(object sender, EventArgs e)
         {
-            Worker w = new Worker(inputBox.Text);
-            w.Show();
-            w.Run();
-
+            if (pingClientsRadio.Checked)
+            {
+                PingWorker w = new PingWorker(inputBox.Text);
+                w.Show();
+                w.Run();
+            }
+            else if (rebootClientsRadio.Checked)
+            {
+                RebootWorker w = new RebootWorker(inputBox.Text);
+                w.Show();
+                w.Run();
+            }
+            else
+            {
+                MessageBox.Show("Please select a mode", "No mode selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }
