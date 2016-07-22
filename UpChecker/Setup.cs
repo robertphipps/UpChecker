@@ -38,6 +38,24 @@ namespace UpChecker
                 w.Show();
                 w.Run();
             }
+            else if (checkProcessRadio.Checked)
+            {
+                WorkerWindow w = new WorkerWindow(clients, WorkerMode.Checkprocess);
+                w.Show();
+                w.Run();
+            }
+            else if (startProcessRadio.Checked)
+            {
+                WorkerWindow w = new WorkerWindow(clients, WorkerMode.Startprocess);
+                w.Show();
+                w.Run();
+            }
+            else if (logOffRadio.Checked)
+            {
+                WorkerWindow w = new WorkerWindow(clients, WorkerMode.Logoff);
+                w.Show();
+                w.Run();
+            }
             else
             {
                 MessageBox.Show("Please select a mode", "No mode selected", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

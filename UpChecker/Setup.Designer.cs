@@ -35,6 +35,9 @@
             this.rebootClientsRadio = new System.Windows.Forms.RadioButton();
             this.checkClientsRadio = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
+            this.checkProcessRadio = new System.Windows.Forms.RadioButton();
+            this.startProcessRadio = new System.Windows.Forms.RadioButton();
+            this.logOffRadio = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // inputBox
@@ -47,7 +50,7 @@
             // 
             // goButton
             // 
-            this.goButton.Location = new System.Drawing.Point(15, 247);
+            this.goButton.Location = new System.Drawing.Point(15, 352);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(256, 36);
             this.goButton.TabIndex = 1;
@@ -100,24 +103,62 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(192, 292);
+            this.label2.Location = new System.Drawing.Point(166, 391);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.Size = new System.Drawing.Size(105, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "v3.1 - RP 2016";
+            this.label2.Text = "v4 (alpha) - RP 2016";
+            // 
+            // checkProcessRadio
+            // 
+            this.checkProcessRadio.AutoSize = true;
+            this.checkProcessRadio.Location = new System.Drawing.Point(15, 247);
+            this.checkProcessRadio.Name = "checkProcessRadio";
+            this.checkProcessRadio.Size = new System.Drawing.Size(159, 17);
+            this.checkProcessRadio.TabIndex = 3;
+            this.checkProcessRadio.TabStop = true;
+            this.checkProcessRadio.Text = "Check for process on clients";
+            this.checkProcessRadio.UseVisualStyleBackColor = true;
+            // 
+            // startProcessRadio
+            // 
+            this.startProcessRadio.AutoSize = true;
+            this.startProcessRadio.Location = new System.Drawing.Point(15, 270);
+            this.startProcessRadio.Name = "startProcessRadio";
+            this.startProcessRadio.Size = new System.Drawing.Size(135, 17);
+            this.startProcessRadio.TabIndex = 5;
+            this.startProcessRadio.TabStop = true;
+            this.startProcessRadio.Text = "Start process on clients";
+            this.startProcessRadio.UseVisualStyleBackColor = true;
+            // 
+            // logOffRadio
+            // 
+            this.logOffRadio.AutoSize = true;
+            this.logOffRadio.Location = new System.Drawing.Point(15, 293);
+            this.logOffRadio.Name = "logOffRadio";
+            this.logOffRadio.Size = new System.Drawing.Size(209, 17);
+            this.logOffRadio.TabIndex = 6;
+            this.logOffRadio.TabStop = true;
+            this.logOffRadio.Text = "Log off any console sessions on clients";
+            this.logOffRadio.UseVisualStyleBackColor = true;
             // 
             // Setup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 314);
+            this.ClientSize = new System.Drawing.Size(280, 413);
+            this.Controls.Add(this.logOffRadio);
+            this.Controls.Add(this.startProcessRadio);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.checkProcessRadio);
             this.Controls.Add(this.checkClientsRadio);
             this.Controls.Add(this.rebootClientsRadio);
             this.Controls.Add(this.pingClientsRadio);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.goButton);
             this.Controls.Add(this.inputBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Setup";
             this.Text = "UpChecker";
             this.ResumeLayout(false);
@@ -134,6 +175,9 @@
         private System.Windows.Forms.RadioButton rebootClientsRadio;
         private System.Windows.Forms.RadioButton checkClientsRadio;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton checkProcessRadio;
+        private System.Windows.Forms.RadioButton startProcessRadio;
+        private System.Windows.Forms.RadioButton logOffRadio;
     }
 }
 

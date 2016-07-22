@@ -1,6 +1,6 @@
 ﻿namespace UpChecker
 {
-    partial class DirectoryDialog
+    partial class ListDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -39,11 +39,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(311, 39);
+            this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Please type directory to check for, relative to network share root.\r\nIf multiple " +
-    "directories are entered (one on each line) the software\r\nwill check to see if an" +
-    "y exist.";
+            this.label1.Text = "Please wait";
             // 
             // textBox1
             // 
@@ -73,7 +71,7 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // DirectoryDialog
+            // ListDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -82,8 +80,10 @@
             this.Controls.Add(this.okayButton);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Name = "DirectoryDialog";
-            this.Text = "DirectoryDialog";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.Name = "ListDialog";
+            this.Text = "ListDialog";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -40,36 +40,38 @@
             this.outputBox.Name = "outputBox";
             this.outputBox.ReadOnly = true;
             this.outputBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputBox.Size = new System.Drawing.Size(878, 352);
+            this.outputBox.Size = new System.Drawing.Size(878, 417);
             this.outputBox.TabIndex = 0;
             this.outputBox.Text = "Please wait.\r\n";
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(12, 370);
+            this.progressBar.Location = new System.Drawing.Point(12, 435);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(741, 24);
             this.progressBar.TabIndex = 1;
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(760, 370);
+            this.cancelButton.Location = new System.Drawing.Point(760, 435);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(130, 24);
             this.cancelButton.TabIndex = 2;
-            this.cancelButton.Text = "Cancel";
+            this.cancelButton.Text = "Terminate";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // Worker
+            // WorkerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(902, 406);
+            this.ClientSize = new System.Drawing.Size(902, 471);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.outputBox);
-            this.Name = "Worker";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "WorkerWindow";
             this.Text = "Worker";
             this.ResumeLayout(false);
             this.PerformLayout();

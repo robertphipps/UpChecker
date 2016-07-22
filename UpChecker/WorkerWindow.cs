@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.IO;
 using System.Linq;
+using System.Management.Automation;
 
 namespace UpChecker
 {
@@ -38,8 +39,17 @@ namespace UpChecker
                 case WorkerMode.Reboot:
                     runReboot();
                     break;
+                case WorkerMode.Logoff:
+                    runLogoff();
+                    break;
                 case WorkerMode.Checkfile:
                     runCheckFile();
+                    break;
+                case WorkerMode.Checkprocess:
+                    runCheckProcess();
+                    break;
+                case WorkerMode.Startprocess:
+                    runStartProcess();
                     break;
             }
         }
@@ -49,6 +59,15 @@ namespace UpChecker
             foreach (var a in addresses)
             {
                 var t = new RebootWorker(a, this);
+                tasks.Add(Task.Factory.StartNew(t.Do));
+            }
+        }
+
+        private void runLogoff()
+        {
+            foreach (var a in addresses)
+            {
+                var t = new LogoffWorker(a, this);
                 tasks.Add(Task.Factory.StartNew(t.Do));
             }
         }
@@ -64,18 +83,68 @@ namespace UpChecker
 
         private void runCheckFile()
         {
-            var dialog = new DirectoryDialog();
+            var dialog = new ListDialog(@"Please type directory to check for, relative to network share root.
+If multiple directories are entered (one on each line) the software
+will check to see if any exist.");
             var dr = dialog.ShowDialog();
             if (dr == DialogResult.Cancel)
             {
                 Application.Exit();
             }
 
-            var dirs = dialog.directory.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var dirs = dialog.input.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             foreach (var a in addresses)
             {
                 var t = new CheckFileWorker(a, dirs, this);
+                tasks.Add(Task.Factory.StartNew(t.Do));
+            }
+        }
+
+        private void runCheckProcess()
+        {
+            var dialog = new ListDialog(@"Please type process name to check for.
+If multiple processes are entered (one on each line) the software
+will check to see if any exist.");
+            var dr = dialog.ShowDialog();
+            if (dr == DialogResult.Cancel)
+            {
+                Application.Exit();
+            }
+
+            var procs = dialog.input.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            foreach (var a in addresses)
+            {
+                var t = new CheckProcessWorker(a, procs, this);
+                tasks.Add(Task.Factory.StartNew(t.Do));
+            }
+        }
+
+        private void runStartProcess()
+        {
+            var dialog = new ListDialog(@"Please type location of process to execute.");
+            var dr = dialog.ShowDialog();
+            if (dr == DialogResult.Cancel)
+            {
+                Application.Exit();
+            }
+
+            try
+            {
+                Process.Start("psexec");
+            }
+            catch (Exception e)
+            {
+                outputBox.AppendText("ERROR: Cannot find 'psexec' on path. Please install sysinternals psexec. (" + e.Message + ")");
+                return;
+            }
+
+            var procs = dialog.input.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList().First();
+
+            foreach (var a in addresses)
+            {
+                var t = new StartProcessWorker(a, procs, this);
                 tasks.Add(Task.Factory.StartNew(t.Do));
             }
         }
@@ -111,6 +180,81 @@ namespace UpChecker
                 else
                 {
                     worker.update(address, "Nope - can't find directory");
+                }
+            }
+        }
+
+        private class StartProcessWorker
+        {
+            private string address;
+            private string process;
+            private WorkerWindow worker;
+            public StartProcessWorker(string a, string p, WorkerWindow w)
+            {
+                address = a;
+                process = p;
+                worker = w;
+            }
+
+            public void Do()
+            {
+                Process p = new Process();
+                ProcessStartInfo ps = new ProcessStartInfo();
+                ps.WindowStyle = ProcessWindowStyle.Hidden;
+                ps.FileName = "psexec";
+                ps.UseShellExecute = false;
+                ps.RedirectStandardOutput = true;
+                ps.RedirectStandardError = true;
+                ps.Arguments = @"\\" + address + " \"" + process + "\"";
+                p.StartInfo = ps;
+                p.Start();
+                
+                var m = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
+                p.WaitForExit();
+                p.Close();
+                worker.update(address, m);
+            }
+        }
+
+        private class CheckProcessWorker
+        {
+            private string address;
+            private List<string> processes;
+            private WorkerWindow worker;
+            public CheckProcessWorker(string a, List<string> prs, WorkerWindow w)
+            {
+                address = a;
+                processes = prs;
+                worker = w;
+            }
+
+            public void Do()
+            {
+                var found = false;
+
+                foreach (var p in processes)
+                {
+                    try
+                    {
+                        if (Process.GetProcessesByName(p, address).Count() != 0)
+                        {
+                            found = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        worker.update(address, "Error: " + e.Message);
+                        return;
+                    }
+                }
+
+                if (found)
+                {
+                    worker.update(address, "Fine");
+                }
+                else
+                {
+                    worker.update(address, "Nope - can't find process");
                 }
             }
         }
@@ -175,20 +319,28 @@ namespace UpChecker
 
             public void Do()
             {
-                Process p = new Process();
-                ProcessStartInfo ps = new ProcessStartInfo();
-                ps.WindowStyle = ProcessWindowStyle.Hidden;
-                ps.FileName = "shutdown.exe";
-                ps.UseShellExecute = false;
-                ps.RedirectStandardOutput = true;
-                ps.RedirectStandardError = true;
-                ps.Arguments = "/r /t 5 /m \\\\" + address;
-                p.StartInfo = ps;
-                p.Start();
-                var m = p.StandardOutput.ReadToEnd() + p.StandardError.ReadToEnd();
-                p.WaitForExit();
-                p.Close();
-                worker.update(address, m);
+                using (PowerShell ps = PowerShell.Create())
+            }
+        }
+
+        public class LogoffWorker
+        {
+            private string address;
+            private WorkerWindow worker;
+            public LogoffWorker(string a, WorkerWindow w)
+            {
+                address = a;
+                worker = w;
+            }
+
+            public void Do()
+            {
+                using (PowerShell ps = PowerShell.Create())
+                {
+                    ps.AddScript("LOGOFF console /server:" + address);
+                    var r = ps.BeginInvoke();
+                    // todo callback
+                }
             }
         }
 
@@ -211,7 +363,7 @@ namespace UpChecker
                 {
                     m = p.Send(address).Status.ToString();
                 }
-                catch (System.Net.NetworkInformation.PingException e)
+                catch (PingException e)
                 {
                     m = e.Message.ToString();
                 }
@@ -222,6 +374,6 @@ namespace UpChecker
 
     public enum WorkerMode
     {
-        Ping, Reboot, Checkfile
+        Ping, Reboot, Checkfile, Checkprocess, Startprocess, Logoff
     }
 }

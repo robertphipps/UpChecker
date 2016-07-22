@@ -10,19 +10,20 @@ using System.Windows.Forms;
 
 namespace UpChecker
 {
-    public partial class DirectoryDialog : Form
+    public partial class ListDialog : Form
     {
-        public string directory { get; set; }
+        public string input { get; set; }
 
-        public DirectoryDialog()
+        public ListDialog(string message)
         {
             InitializeComponent();
+            label1.Text = message;
         }
 
         private void okayButton_click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            directory = textBox1.Text;
+            input = textBox1.Text;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
